@@ -1,0 +1,23 @@
+(define (make-account ini pw)
+  (let ((password pw)) 
+    (define (withdraw amount)
+        (if (>= ini amount)
+          (begin (set! ini (- ini amount)) ini)
+          "Insufficient funds"))
+    (define (deposit amount)
+        (set! ini (+ ini amount))
+        ini)
+    (define (wrong yang) "Incorrect password!!!")
+
+  (define (dispatch n m)
+    (if (eq? n password) 
+      (cond ((eq? m 'withdraw) withdraw)
+            ((eq? m 'deposit) deposit)
+            (else (error "Unknown request -- MAKE-ACCOUNT"
+                             m)))
+      wrong))
+  ;(if(not (null? pw)) (dispatch) "There is no password")))
+  dispatch))
+
+;(define acc (make-account 100 'sec))
+(define acc (make-account 100 'sec))
